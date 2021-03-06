@@ -4,21 +4,19 @@ var gifBoardEl = $("#gif-board");
 var loadingEl = $("#loading");
 var gifsEl = $(".gif");
 
-
 console.log("Js is working");
 
-//Get started button > load gif board
+//When "get started is clicked" gifboard page will display
 $("#get-started-btn").click(function() {
     window.location.href = "gifboard.html";
   });
 
-//Hook for any gif being selected
+//HWhen any gif is clicked...
 gifsEl.click(function() {
-  //On click > gifboard and h3 are hidden
+  //Gifboard content is hidden and...
   gifBoardEl.addClass("is-hidden");
   $("#gifboard-h3").addClass("is-hidden");
-  //Loading H3 and load bar are displayed
+  //Loading content is displayed
   loadingEl.removeClass("is-hidden");
   $("#loading-h3").removeClass("is-hidden");
-  
 });
