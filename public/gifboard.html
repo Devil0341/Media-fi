@@ -16,10 +16,9 @@
     <h2 class="subtitle is-3">Music and podcast recommendations to match your mood.</h2>
   </header>
 
-  <main
-    class="content has-text-centered is-flex is-flex-direction-column is-align-content-center is-justify-content-center">
+  <main class="content has-text-centered is-flex is-flex-direction-column is-align-content-center is-justify-content-center">
 
-    <h3 class="m-6">Select a schmood</h3>
+    <h3 class="m-6" id="gifboard-h3">Select a schmood</h3>
 
     <section class="tile is-ancestor" id="gif-board">
       <div class="columns">
@@ -27,45 +26,35 @@
 
           <!-- TOP ROW -->
           <div class="columns">
-            <div class='column' id='happy'>
-            </div>
-            <div class="column" id='sad'>
-            </div>
-
-            <div class="column" id="funny">
-            </div>
+            <div class="column gif" id="happy"></div>
+            <div class="column gif" id="sad"></div>
+            <div class="column gif" id="funny"></div>
           </div>
 
           <!-- CENTER ROW -->
           <div class="columns">
-            <div class="column" id='mad'>
-              
-            </div>
-            <div class="column" id='confused'>
-              
-            </div>
-            <div class="column" id='inspirational'>
-              
-            </div>
+            <div class="column gif" id="mad"></div>
+            <div class="column gif" id="confused"></div>
+            <div class="column gif" id="inspirational"></div>
           </div>
 
           <!-- BOTTOM ROW -->
           <div class="columns">
-            <div class="column" id='excited'>
-              
-            </div>
-            <div class="column" id='lazy'>
-              
-            </div>
-            <div class="column" id='jealous'>
-              
-            </div>
+            <div class="column gif" id="excited"></div>
+            <div class="column gif" id="lazy"></div>
+            <div class="column gif" id="jealous"></div>
           </div>
         </div>
       </div>
     </section>
+  
+  <!-- HIDDEN LOAD SCREEN -->
+  <div id="loading-container">
+    <h3 class="m-6 is-hidden" id="loading-h3">Loading recommendations...</h3>
+    <progress class="progress is-large is-primary is-hidden" max="100" id="loading">60%</progress>
+  </div>
 
-  </main>
+</main>
 
   <footer class="footer has-text-centered" id="footer">
     <p><strong>MEDIA-fi</strong> is created by Jonathan Drabot, Greg Petropoulos, and Anisha McDowell using the
