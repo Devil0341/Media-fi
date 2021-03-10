@@ -28,16 +28,8 @@ gifsEl.click(function() {
   $("#loading-h3").removeClass("is-hidden");
 });
 
-// // Get started button > load gif board
-// $("#get-started-btn").click(function () {
-//   console.log("Get started was clicked");
-//   window.location.href = "gifboard.html";
-
-// });
 
 // Setting up fetch for giphy grid call and spotify call
-
-
 function giphyGrid(searchTerm) {
   // loop over the searchTerm array
   for (var i = 0; i < 10; i++) {
