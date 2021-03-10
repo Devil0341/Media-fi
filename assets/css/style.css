@@ -3,6 +3,9 @@ main {
     text-align: justify;
 }
 
+.gif:hover {
+    transform:scale(1.5);
+}
 /* :root {
     --main-color: lightgray;
 }
