@@ -14,20 +14,9 @@ var loadingEl = $("#loading");
 var gifsEl = $(".gif");
 
 //When "get started is clicked" gifboard page will display
-$("#get-started-btn").click(function() {
-    window.location.href = "gifboard.html";
-  });
-
-//When any gif is clicked...
-gifsEl.click(function() {
-  //Gifboard content is hidden and...
-  gifBoardEl.addClass("is-hidden");
-  $("#gifboard-h3").addClass("is-hidden");
-  //Loading content is displayed
-  loadingEl.removeClass("is-hidden");
-  $("#loading-h3").removeClass("is-hidden");
+$("#get-started-btn").click(function () {
+  window.location.href = "gifboard.html";
 });
-
 
 // Setting up fetch for giphy grid call and spotify call
 function giphyGrid(searchTerm) {
@@ -35,19 +24,67 @@ function giphyGrid(searchTerm) {
   for (var i = 0; i < 10; i++) {
     fetchBasedOnEmotion(searchTerm[i]);
   }
-  
+
 }
 // 
 function fetchBasedOnEmotion(emo) {
   fetch(`${BASE_URL}&q=${emo}`)
-    .then(function(res) {
+    .then(function (res) {
       return res.json()
-    }).then(function(data) {      
-      var innerHTML = $(`<img src=${data.data[0].images.original.url}/>`)
+    }).then(function (data) {
+      var innerHTML = $(`<img src=${data.data[0].images.original.url} data-emo=${emo}/>`)
       var searchId = `#${emo}`;
       $(`#${emo}`).append(innerHTML);
     })
 
 }
 
+// -----------------------------------------
+
+var searchVal;
+gifsEl.on("click", function () {
+  var selectedGif = $(this);
+  var emo = selectedGif.attr('id');
+  window.location.href = "recommendations.html";
+  // //Gifboard content is hidden and...
+  // gifBoardEl.addClass("is-hidden");
+  // $("#gifboard-h3").addClass("is-hidden");
+  // //Loading content is displayed
+  // loadingEl.removeClass("is-hidden");
+  // $("#loading-h3").removeClass("is-hidden");
+ 
+  
+  spotifyMedia(emo)
+  
+});
+
+var offsetSpotify = Math.floor(Math.random() * 1000);
+
+  async function spotifyMedia(searchVal) {
+  
+    var tokenRes = await fetch("/api/spotify/token");
+  
+    var tokenData = await tokenRes.json()
+    console.log(tokenData);
+  
+    var token = tokenData.access_token;
+  
+    var bearer = `Bearer ${token}`
+  
+    var res = await fetch(`https://api.spotify.com/v1/search?q=${searchVal}&type=album,track,artist`, {
+      method: "GET",
+      headers: {
+        "Authorization": bearer
+      }
+    })
+  
+    var data = await res.json();
+  
+    console.log(data)
+    
+  
+  };
+
+// call key value pairs to choose a track according to emotion of gify
+// link song to appropriate gif board tile
 
