@@ -2,9 +2,9 @@ var getStartedEl = $("#get-started-btn");
 var introEl = $("#intro");
 var gifBoardEl = $("#gif-board");
 var giphyGridItems = []
-var BASE_URL = `https://api.giphy.com/v1/gifs/search?api_key=DmJrVZsNraIXZqq3u6JXaUIkz1kcRShZ&limit=1&offset=${offset}&rating=g&lang=en`;
+var BASE_URL = `https://api.giphy.com/v1/gifs/search?api_key=DmJrVZsNraIXZqq3u6JXaUIkz1kcRShZ&limit=1&offset=${offset}&rating=r&lang=en`;
 var searchTerm = ['happy', 'sad', 'funny', 'mad', 'confused', 'inspirational', 'excited', 'lazy', 'jealous']
-var offset = Math.floor(Math.random() * 4999);
+var offset = Math.floor(Math.random() * 4999) + 1;
 
 console.log("Js is working");
 
@@ -32,7 +32,9 @@ function fetchBasedOnEmotion(emo) {
     .then(function (res) {
       return res.json()
     }).then(function (data) {
+      //   var paginationRandom= data.pagination.total_count(Math.floor(math.random()*3)+1)??
       var innerHTML = $(`<img src=${data.data[0].images.original.url} data-emo=${emo}/>`)
+      // console.log(data)
       var searchId = `#${emo}`;
       $(`#${emo}`).append(innerHTML);
     })
@@ -40,7 +42,7 @@ function fetchBasedOnEmotion(emo) {
 }
 
 // -----------------------------------------
-
+//When gify clicked on it will pass through the spotifyMedia function and retrieve a search for music based on the emotion of gif
 var searchVal;
 gifsEl.on("click", function () {
   var selectedGif = $(this);
@@ -52,39 +54,53 @@ gifsEl.on("click", function () {
   // //Loading content is displayed
   // loadingEl.removeClass("is-hidden");
   // $("#loading-h3").removeClass("is-hidden");
- 
-  
-  spotifyMedia(emo)
-  
-});
 
-var offsetSpotify = Math.floor(Math.random() * 1000);
 
-  async function spotifyMedia(searchVal) {
-  
-    var tokenRes = await fetch("/api/spotify/token");
-  
-    var tokenData = await tokenRes.json()
-    console.log(tokenData);
-  
-    var token = tokenData.access_token;
-  
-    var bearer = `Bearer ${token}`
-  
-    var res = await fetch(`https://api.spotify.com/v1/search?q=${searchVal}&type=album,track,artist`, {
-      method: "GET",
-      headers: {
-        "Authorization": bearer
-      }
-    })
-  
-    var data = await res.json();
-  
-    console.log(data)
+//   spotifyMedia(emo)
+
+ });
+
+var offsetSpotify = Math.floor(Math.random() * 1000) + 1;
+
+async function spotifyMedia(searchVal) {
+
+  var tokenRes = await fetch("/api/spotify/token");
+
+  var tokenData = await tokenRes.json()
+  console.log(tokenData);
+
+  var token = tokenData.access_token;
+
+  var bearer = `Bearer ${token}`
+
+  var res = await fetch(`https://api.spotify.com/v1/search?q=${searchVal}&type=track&limit=3`, {
+    method: "GET",
+    headers: {
+      "Authorization": bearer
+    }
+  })
+
+  var data = await res.json();
+
+  console.log(data)
+
+
+
+
+  for (var i = 0; i < data.length; i++) {
+   
+      var tracks = tracks.items[i].external_url.spotify;
+      var artist = tracks.items[i].artists[0].name;
+      var songTitle = tracks.items[i].name;
+      var albumCover = tracks.items[i].album.images[1].url;
+
+
+      $('#artist-1').text(artist);
+      $('#album-cover-1').append(albumCover);
+      $('#song-name-1').text(songTitle)
+      console.log(artist);
     
-  
-  };
+  }
 
-// call key value pairs to choose a track according to emotion of gify
-// link song to appropriate gif board tile
 
+};
