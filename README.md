@@ -12,7 +12,8 @@ When I click on a giphy, then a reloaded page of music recommendations will be d
 We used a plethora of technologies throughout this project. That list includes: Bulma, Javascript, HTML5, CSS3, jQuery, Giphy API, Spotify API, Node.js, Heroku, Github, Powerpoint, Slack, Zoom.
 
 ## Screenshot
-
+[Screencast](https://youtu.be/goQVU4J506Y)
+![](public/assets/images/gifs.gif)
 
 ## Link to Deployed Site and Github Repository
 https://polar-atoll-49785.herokuapp.com/index.html
