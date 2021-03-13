@@ -76,7 +76,7 @@ async function spotifyMedia(searchVal) {
   var bearer = `Bearer ${token}`
 
 
-  var res = await fetch(`https://api.spotify.com/v1/search?q=${searchVal}&type=track&limit=3`, {
+  var res = await fetch(`https://api.spotify.com/v1/search?q=${searchVal}&type=track&limit=9`, {
     method: "GET",
     headers: {
       "Authorization": bearer
