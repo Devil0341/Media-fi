@@ -2,9 +2,9 @@ var getStartedEl = $("#get-started-btn");
 var introEl = $("#intro");
 var gifBoardEl = $("#gif-board");
 var giphyGridItems = []
-var BASE_URL = `https://api.giphy.com/v1/gifs/search?api_key=DmJrVZsNraIXZqq3u6JXaUIkz1kcRShZ&limit=1&offset=${offset}&rating=g&lang=en`;
+var BASE_URL = `https://api.giphy.com/v1/gifs/search?api_key=DmJrVZsNraIXZqq3u6JXaUIkz1kcRShZ&limit=10&offset=${offset}&rating=g&lang=en`;
 var searchTerm = ['happy', 'sad', 'funny', 'mad', 'confused', 'inspirational', 'excited', 'lazy', 'jealous']
-var offset = Math.floor(Math.random() * 4999);
+var offset = Math.floor(Math.random() * 4999) + 1;
 
 console.log("Js is working");
 
@@ -26,13 +26,17 @@ function giphyGrid(searchTerm) {
   }
 
 }
-// 
+// retrieving gifs from api and display to html
 function fetchBasedOnEmotion(emo) {
   fetch(`${BASE_URL}&q=${emo}`)
     .then(function (res) {
       return res.json()
     }).then(function (data) {
-      var innerHTML = $(`<img src=${data.data[0].images.original.url} data-emo=${emo}/>`)
+
+      var randomIndex = Math.floor(Math.random() * data.data.length)
+
+      var innerHTML = $(`<img src=${data.data[randomIndex].images.original.url} data-emo=${emo}/>`)
+      // console.log(data)
       var searchId = `#${emo}`;
       $(`#${emo}`).append(innerHTML);
     })
@@ -40,51 +44,51 @@ function fetchBasedOnEmotion(emo) {
 }
 
 // -----------------------------------------
+//When gify clicked on it will pass through the spotifyMedia function and retrieve a search for music based on the emotion of gif
 
-var searchVal;
-gifsEl.on("click", function () {
+
+gifsEl.on("click", function (event) {
+  event.preventDefault()
   var selectedGif = $(this);
   var emo = selectedGif.attr('id');
-  window.location.href = "recommendations.html";
-  // //Gifboard content is hidden and...
-  // gifBoardEl.addClass("is-hidden");
-  // $("#gifboard-h3").addClass("is-hidden");
-  // //Loading content is displayed
-  // loadingEl.removeClass("is-hidden");
-  // $("#loading-h3").removeClass("is-hidden");
- 
-  
+  //Gifboard content is hidden and...
+  gifBoardEl.addClass("is-hidden");
+  $("#gifboard-h3").addClass("is-hidden");
+  //Loading content is displayed
+  loadingEl.removeClass("is-hidden");
+  $("#loading-h3").removeClass("is-hidden");
   spotifyMedia(emo)
-  
+
 });
 
-var offsetSpotify = Math.floor(Math.random() * 1000);
+var offsetSpotify = Math.floor(Math.random() * 1000) + 1;
 
-  async function spotifyMedia(searchVal) {
-  
-    var tokenRes = await fetch("/api/spotify/token");
-  
-    var tokenData = await tokenRes.json()
-    console.log(tokenData);
-  
-    var token = tokenData.access_token;
-  
-    var bearer = `Bearer ${token}`
-  
-    var res = await fetch(`https://api.spotify.com/v1/search?q=${searchVal}&type=album,track,artist`, {
-      method: "GET",
-      headers: {
-        "Authorization": bearer
-      }
-    })
-  
-    var data = await res.json();
-  
-    console.log(data)
-    
-  
-  };
+async function spotifyMedia(searchVal) {
 
-// call key value pairs to choose a track according to emotion of gify
-// link song to appropriate gif board tile
+  console.log("searchVal", searchVal);
+
+  var tokenRes = await fetch("/api/spotify/token");
+
+  var tokenData = await tokenRes.json()
+
+  var token = tokenData.access_token;
+
+  var bearer = `Bearer ${token}`
+
+
+  var res = await fetch(`https://api.spotify.com/v1/search?q=${searchVal}&type=track&limit=3`, {
+    method: "GET",
+    headers: {
+      "Authorization": bearer
+    }
+  })
+
+  var data = await res.json();
+
+
+  localStorage.setItem("spotifyData", JSON.stringify(data));
+
+  location.href = "recommendations.html";
+
+};
 
