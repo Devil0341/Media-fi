@@ -17,9 +17,10 @@ function getSpotifyDataFromLocalStorage() {
 
 
         var htmlData = $(`
+        <div class="column is-one-third">
         <div id=${tracks} class="card">
         <div class="card-image">
-        <figure class="image is-4by3">
+        <figure class="image">
         <img src=${albumCover} />
                 </figure>
                 </div>
@@ -28,6 +29,7 @@ function getSpotifyDataFromLocalStorage() {
             <div class="media-content">
             <p class="title is-4">${songTitle}</p>
             <p class = "title is-3">${artist}</p>
+            </div>
             </div>
             </div>
             </div>
@@ -48,3 +50,8 @@ function getSpotifyDataFromLocalStorage() {
 
 
 getSpotifyDataFromLocalStorage()
+
+//When "try again" is clicked gifboard will display again
+$("#try-again-btn").click(function () {
+  window.location.href = "gifboard.html";
+});
