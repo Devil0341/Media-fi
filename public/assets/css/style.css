@@ -1,5 +1,9 @@
-main {
+/* #main-gifboard {
     margin: 10px 350px 0px 350px;
     text-align: justify;
 }
+ */
+/*  
+ @import "bulma/sass/utilities/_all.sass" */
 
+@import "bulma/sass/grid/columns.sass"
